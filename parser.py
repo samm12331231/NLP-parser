@@ -1,6 +1,7 @@
 import nltk
 import sys
 
+# TERMINAL RULES: define words
 TERMINALS = """
 Adj -> "country" | "dreadful" | "enigmatical" | "little" | "moist" | "red"
 Adv -> "down" | "here" | "never"
@@ -15,7 +16,11 @@ V -> "smiled" | "tell" | "were"
 """
 
 NONTERMINALS = """
-S -> N V
+S -> NP VP | S Conj S
+NP -> N | Det N | Det AdjP N | NP PP
+VP -> V | V NP | VP PP | Adv VP | VP Adv
+AdjP -> Adj | Adj AdjP
+PP -> P NP
 """
 
 grammar = nltk.CFG.fromstring(NONTERMINALS + TERMINALS)
@@ -28,8 +33,6 @@ def main():
     if len(sys.argv) == 2:
         with open(sys.argv[1]) as f:
             s = f.read()
-
-    # Otherwise, get sentence as input
     else:
         s = input("Sentence: ")
 
@@ -58,38 +61,34 @@ def main():
 def preprocess(sentence):
     """
     Convert `sentence` to a list of its words.
-    Pre-process sentence by converting all characters to lowercase
-    and removing any word that does not contain at least one alphabetic
-    character.
+    Lowercase all letters, keep only words with alphabetic characters.
     """
-    sentence=sentence.lower()
+    sentence = sentence.lower()
 
     words = sentence.split()
-
-    result=[]
+    result = []
 
     for word in words:
-        cleaned_word= ''.join(char for char in word if char.isalpha())
+        cleaned_word = ''.join(char for char in word if char.isalpha())
 
         if cleaned_word:
             result.append(cleaned_word)
-        
 
-        return result
+    return result
+
 
 def np_chunk(tree):
     """
-    Return a list of all noun phrase chunks in the sentence tree.
-    A noun phrase chunk is defined as any subtree of the sentence
-    whose label is "NP" that does not itself contain any other
-    noun phrases as subtrees.
+    Return a list of all noun phrase (NP) chunks in the sentence tree.
+    NP chunk = subtree labeled "NP" that does not contain another NP.
     """
-    chunkz =[]
-    for subtree in tree.subtree():
+    chunks = []
+    for subtree in tree.subtrees():
         if subtree.label() == "NP":
-             if not any(child.label() == "NP" for child in subtree if isinstance(child, nltk.Tree)):
-                 chunkz.append(subtree)
-    return chunkz
+            if not any(child.label() == "NP" for child in subtree if isinstance(child, nltk.Tree)):
+                chunks.append(subtree)
+    return chunks
+
 
 if __name__ == "__main__":
     main()
