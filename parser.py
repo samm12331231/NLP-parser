@@ -62,7 +62,7 @@ def preprocess(sentence):
     and removing any word that does not contain at least one alphabetic
     character.
     """
-    sentence=sentence.lower 
+    sentence=sentence.lower()
 
     words = sentence.split()
 
