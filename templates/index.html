@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>NLP Parser Demo</title>
 </head>
 <body>
     <h1>NLP Parser Demo</h1>
     <form method="POST">
-        <textarea name="text" rows="5" cols="60" placeholder="Enter a sentence..."></textarea><br><br>
+        <input type="text" name="text" placeholder="Enter a sentence" style="width:300px;">
         <button type="submit">Parse</button>
     </form>
 
     {% if result %}
-    <h2>Output:</h2>
-    <pre>{{ result }}</pre>
+        <h2>Parse Tree:</h2>
+        <div style="white-space: pre-wrap;">{{ result|safe }}</div>
+
+        <h2>Noun Phrase Chunks:</h2>
+        <div>{{ noun_phrases }}</div>
     {% endif %}
 </body>
 </html>
