@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NLP Parser Demo</title>
+</head>
+<body>
+    <h1>NLP Parser Demo</h1>
+    <form method="POST">
+        <textarea name="text" rows="5" cols="60" placeholder="Enter a sentence..."></textarea><br><br>
+        <button type="submit">Parse</button>
+    </form>
+
+    {% if result %}
+    <h2>Output:</h2>
+    <pre>{{ result }}</pre>
+    {% endif %}
+</body>
+</html>
