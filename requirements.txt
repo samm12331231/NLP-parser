@@ -1,3 +1,2 @@
-nltk
-Flask == 2.2.5
-scikit-learn 
+Flask==2.2.5
+nltk==3.9.1

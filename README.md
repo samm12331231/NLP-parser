@@ -7,6 +7,7 @@ A small natural language parser built with **NLTK** and a simple **Flask** web U
 - Parses a sentence using a context-free grammar (CFG)
 - Produces one or more parse trees
 - Extracts noun phrase (NP) chunks from parsed trees
+- Supports both command-line and browser-based usage
 
 ## Project files
 
@@ -23,9 +24,8 @@ A small natural language parser built with **NLTK** and a simple **Flask** web U
 
 Dependencies:
 
-- `nltk`
 - `Flask==2.2.5`
-- `scikit-learn`
+- `nltk==3.9.1`
 
 ## Setup
 
@@ -59,5 +59,6 @@ Then open:
 
 ## Notes
 
-- Input text is lowercased and non-alphabetic characters are stripped per token before parsing.
+- Input text is lowercased and tokenized, with non-alphabetic characters stripped from each token.
 - If a sentence cannot be parsed by the defined grammar, no parse tree is returned.
+- Flask debug mode is off by default and can be enabled with `FLASK_DEBUG=1`.
