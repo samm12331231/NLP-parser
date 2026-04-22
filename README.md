@@ -26,7 +26,7 @@ Dependencies:
 
 - `Flask>=3.0.3,<4.0`
 - `Werkzeug>=3.0.3,<4.0`
-- `nltk==3.9.1`
+- `nltk==3.9.3`
 
 ## Setup
 
