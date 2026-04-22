@@ -25,7 +25,7 @@ A small natural language parser built with **NLTK** and a simple **Flask** web U
 Dependencies:
 
 - `Flask==2.2.5`
-- `Werkzeug==2.2.3`
+- `Werkzeug>=2.3.8,<3.0`
 - `nltk==3.9.1`
 
 ## Setup

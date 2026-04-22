@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import os
+from os import getenv
 import parser as nlp_parser
 
 app = Flask(__name__)
@@ -45,7 +45,7 @@ def index():
 if __name__ == "__main__":
     print("Starting Flask server...")
     app.run(
-        debug=os.getenv("FLASK_DEBUG", "").lower() in {"1", "true", "yes"},
+        debug=getenv("FLASK_DEBUG", "").lower() in {"1", "true", "yes"},
         host="0.0.0.0",
         port=10000
     )
