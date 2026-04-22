@@ -24,8 +24,10 @@ def index():
                 seen_chunks = set()
                 for tree in trees:
                     for np_subtree in nlp_parser.np_chunk(tree):
+                        # NLTK leaves are usually strings; tuple handling keeps this robust
+                        # if tagged or structured leaves are introduced later.
                         leaf_words = [
-                            leaf[0] if isinstance(leaf, tuple) else leaf
+                            leaf[0] if isinstance(leaf, tuple) else str(leaf)
                             for leaf in np_subtree.leaves()
                         ]
                         chunk_text = " ".join(leaf_words)
