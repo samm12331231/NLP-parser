@@ -89,7 +89,7 @@ def np_chunk(tree):
     Return a list of all noun phrase (NP) chunks in the sentence tree.
     NP chunk = subtree labeled "NP" that does not contain another NP.
     """
-    def has_nested_np(np_subtree):
+    def _has_nested_np(np_subtree):
         for nested in np_subtree.subtrees():
             if nested is not np_subtree and nested.label() == "NP":
                 return True
@@ -97,7 +97,7 @@ def np_chunk(tree):
 
     chunks = []
     for subtree in tree.subtrees():
-        if subtree.label() == "NP" and not has_nested_np(subtree):
+        if subtree.label() == "NP" and not _has_nested_np(subtree):
             chunks.append(subtree)
     return chunks
 
