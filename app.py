@@ -24,7 +24,11 @@ def index():
                 seen_chunks = set()
                 for tree in trees:
                     for np_subtree in nlp_parser.np_chunk(tree):
-                        chunk_text = " ".join(np_subtree.leaves())
+                        leaf_words = [
+                            leaf[0] if isinstance(leaf, tuple) else leaf
+                            for leaf in np_subtree.leaves()
+                        ]
+                        chunk_text = " ".join(leaf_words)
                         if chunk_text not in seen_chunks:
                             seen_chunks.add(chunk_text)
                             chunk_values.append(chunk_text)
