@@ -1,5 +1,6 @@
 import nltk
 import sys
+from nltk.tokenize import wordpunct_tokenize
 
 # TERMINAL RULES: define words
 TERMINALS = """
@@ -36,15 +37,7 @@ def main():
     else:
         s = input("Sentence: ")
 
-    # Convert input into list of words
-    s = preprocess(s)
-
-    # Attempt to parse sentence
-    try:
-        trees = list(parser.parse(s))
-    except ValueError as e:
-        print(e)
-        return
+    trees = parse_sentence(s)
     if not trees:
         print("Could not parse sentence.")
         return
@@ -64,8 +57,7 @@ def preprocess(sentence):
     Lowercase all letters, keep only words with alphabetic characters.
     """
     sentence = sentence.lower()
-
-    words = sentence.split()
+    words = wordpunct_tokenize(sentence)
     result = []
 
     for word in words:
@@ -77,16 +69,36 @@ def preprocess(sentence):
     return result
 
 
+def parse_sentence(sentence):
+    """
+    Parse `sentence` and return a list of parse trees.
+    Returns an empty list when parsing fails.
+    """
+    tokens = preprocess(sentence)
+    if not tokens:
+        return []
+
+    try:
+        return list(parser.parse(tokens))
+    except ValueError:
+        return []
+
+
 def np_chunk(tree):
     """
     Return a list of all noun phrase (NP) chunks in the sentence tree.
     NP chunk = subtree labeled "NP" that does not contain another NP.
     """
+    def _has_nested_np(np_subtree):
+        for nested in np_subtree.subtrees():
+            if nested is not np_subtree and nested.label() == "NP":
+                return True
+        return False
+
     chunks = []
     for subtree in tree.subtrees():
-        if subtree.label() == "NP":
-            if not any(child.label() == "NP" for child in subtree if isinstance(child, nltk.Tree)):
-                chunks.append(subtree)
+        if subtree.label() == "NP" and not _has_nested_np(subtree):
+            chunks.append(subtree)
     return chunks
 
 
