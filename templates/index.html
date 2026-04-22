@@ -51,13 +51,13 @@
     {% if parse_trees %}
         <h2>Parse Trees</h2>
         {% for tree in parse_trees %}
-            <pre>{{ tree }}</pre>
+            <pre>{{ tree|e }}</pre>
         {% endfor %}
 
         <h2>Noun Phrase Chunks</h2>
         <ul>
             {% for noun_phrase in noun_phrases %}
-                <li>{{ noun_phrase }}</li>
+                <li>{{ noun_phrase|e }}</li>
             {% endfor %}
         </ul>
     {% endif %}

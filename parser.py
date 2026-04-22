@@ -56,7 +56,7 @@ def preprocess(sentence):
     Convert `sentence` to a list of its words.
     Lowercase all letters, keep only words with alphabetic characters.
     """
-    sentence = sentence.lower().strip()
+    sentence = sentence.lower()
     words = wordpunct_tokenize(sentence)
     result = []
 
